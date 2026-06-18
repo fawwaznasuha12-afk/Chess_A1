@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+models/*.pth
+data/*.npz
+logs/*.log
+assets/*.png
+assets/*.svg
+venv/
+.venv/
+*.db
+.DS_Store
+pyproject.toml
+*.egg-info/
+dist/
+build/
