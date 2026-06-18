@@ -29,7 +29,7 @@ def main():
                         choices=['train', 'save_db', 'play', 'evaluate', 'imitation', 'db_list', 'db_load', 'db_delete'],
                         help='Operation mode')
     
-    # Parameter Training
+    # Training parameters
     parser.add_argument('--games', type=int, default=100,
                         help='Number of self-play games (default: 100)')
     parser.add_argument('--epochs', type=int, default=10,
@@ -45,7 +45,19 @@ def main():
     parser.add_argument('--model_name', type=str, default='chess_ai_model',
                         help='Model name in database (default: chess_ai_model)')
     
-    # Database
+    # Database connection parameters
+    parser.add_argument('--db_host', type=str, default=config.DB_HOST,
+                        help='Database host (default: from config)')
+    parser.add_argument('--db_port', type=int, default=config.DB_PORT,
+                        help='Database port (default: from config)')
+    parser.add_argument('--db_user', type=str, default=config.DB_USER,
+                        help='Database username (default: from config)')
+    parser.add_argument('--db_password', type=str, default=config.DB_PASSWORD,
+                        help='Database password (default: from config)')
+    parser.add_argument('--db_name', type=str, default=config.DB_NAME,
+                        help='Database name (default: from config)')
+    
+    # Database operations
     parser.add_argument('--db_load', type=int, default=None,
                         help='Model ID to load from database')
     
@@ -58,13 +70,13 @@ def main():
     device = Utils.get_device()
     print(f"Using device: {device}")
     
-    # Initialize database
+    # Initialize database with custom parameters if provided
     db = DatabaseHandler(
-        host=config.DB_HOST,
-        port=config.DB_PORT,
-        user=config.DB_USER,
-        password=config.DB_PASSWORD,
-        database=config.DB_NAME
+        host=args.db_host,
+        port=args.db_port,
+        user=args.db_user,
+        password=args.db_password,
+        database=args.db_name
     )
     
     # ============================================
@@ -86,7 +98,7 @@ def main():
                 db.delete_model(args.db_load)
                 db.close()
         else:
-            print("❌ Use --db_load [ID] to delete a model")
+            print("Use --db_load [ID] to delete a model")
         return
     
     # ============================================
@@ -98,17 +110,16 @@ def main():
                 model, metadata = db.load_model(args.db_load)
                 db.close()
                 if model:
-                    print(f"✅ Model loaded from database! ID: {args.db_load}")
-                    print(f"📊 Metadata: {metadata}")
-                    # Save locally
+                    print(f"Model loaded from database! ID: {args.db_load}")
+                    print(f"Metadata: {metadata}")
                     Utils.save_model(model, args.model)
-                    print(f"✅ Model saved to: {args.model}")
+                    print(f"Model saved to: {args.model}")
                 else:
-                    print(f"❌ Model with ID {args.db_load} not found")
+                    print(f"Model with ID {args.db_load} not found")
             else:
-                print("❌ Failed to connect to database")
+                print("Failed to connect to database")
         else:
-            print("❌ Use --db_load [ID] to load a model")
+            print("Use --db_load [ID] to load a model")
         return
     
     # ============================================
@@ -131,19 +142,19 @@ def main():
         il = ImitationLearning(model, device)
         
         if args.pgn:
-            print(f"📂 Loading PGN: {args.pgn}")
+            print(f"Loading PGN: {args.pgn}")
             positions, moves = il.load_pgn_dataset(args.pgn)
         else:
-            print("🤖 Generating dataset from Stockfish...")
+            print("Generating dataset from Stockfish...")
             positions, moves = il.generate_dataset_from_engine(num_games=50)
         
         if len(positions) > 0:
-            print(f"📊 Dataset size: {len(positions)} positions")
+            print(f"Dataset size: {len(positions)} positions")
             model = il.train_step(positions, moves, epochs=args.epochs)
             Utils.save_model(model, args.model)
-            print(f"\n✅ Model saved to: {args.model}")
+            print(f"\nModel saved to: {args.model}")
         else:
-            print("❌ No training data available")
+            print("No training data available")
         return
     
     # ============================================
@@ -177,15 +188,14 @@ def main():
             
             Utils.log_message(f"Iteration {iteration+1} completed with {len(positions)} positions")
         
-        # Save final model
         Utils.save_model(model, args.model)
         
         elapsed = time.time() - start_time
         print(f"\n{'='*50}")
-        print(f"✅ TRAINING COMPLETE!")
-        print(f"✅ Iterations: {args.iterations}")
-        print(f"✅ Time: {elapsed/60:.1f} minutes")
-        print(f"✅ Model saved at: {args.model}")
+        print(f"TRAINING COMPLETE!")
+        print(f"Iterations: {args.iterations}")
+        print(f"Time: {elapsed/60:.1f} minutes")
+        print(f"Model saved at: {args.model}")
         print(f"{'='*50}")
         return
     
@@ -198,15 +208,15 @@ def main():
         print(f"{'='*50}")
         
         if not os.path.exists(args.model):
-            print(f"❌ Model file not found: {args.model}")
-            print(f"💡 Run training first: --mode train")
+            print(f"Model file not found: {args.model}")
+            print(f"Run training first: --mode train")
             return
         
-        print(f"📤 Loading model from: {args.model}")
+        print(f"Loading model from: {args.model}")
         model = ChessNet()
         model, _ = Utils.load_model(model, args.model)
         
-        print(f"📤 Connecting to database...")
+        print(f"Connecting to database...")
         if db.connect():
             db.create_tables()
             model_id = db.save_model(
@@ -216,16 +226,16 @@ def main():
                 epoch=args.epochs
             )
             if model_id:
-                print(f"\n✅ MODEL SAVED TO DATABASE!")
-                print(f"✅ ID: {model_id}")
-                print(f"✅ Name: {args.model_name}")
-                print(f"✅ Iterations: {args.iterations}")
-                print(f"✅ Epochs: {args.epochs}")
+                print(f"MODEL SAVED TO DATABASE!")
+                print(f"ID: {model_id}")
+                print(f"Name: {args.model_name}")
+                print(f"Iterations: {args.iterations}")
+                print(f"Epochs: {args.epochs}")
             else:
-                print("❌ Failed to save model to database")
+                print("Failed to save model to database")
             db.close()
         else:
-            print("❌ Failed to connect to database")
+            print("Failed to connect to database")
         return
     
     # ============================================
@@ -240,8 +250,8 @@ def main():
         print(f"{'='*50}")
         
         if not os.path.exists(args.model):
-            print(f"❌ Model file not found: {args.model}")
-            print(f"💡 Run training first: --mode train")
+            print(f"Model file not found: {args.model}")
+            print(f"Run training first: --mode train")
             return
         
         gui = ChessGUI(model)
@@ -257,8 +267,8 @@ def main():
         print(f"{'='*50}")
         
         if not os.path.exists(args.model):
-            print(f"❌ Model file not found: {args.model}")
-            print(f"💡 Run training first: --mode train")
+            print(f"Model file not found: {args.model}")
+            print(f"Run training first: --mode train")
             return
         
         model2 = ChessNet()
