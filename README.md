@@ -140,6 +140,25 @@ python main.py --mode imitation --pgn data/sample.pgn
 ```bash
 python main.py --help
 ```
+
+## 🔮 Future Scope
+
+- [ ] **Graphical User Interface (GUI)** — Build a proper GUI using Pygame or Tkinter
+- [ ] **Web Deployment** — Deploy as a web app using Streamlit or Flask
+- [ ] **Larger Dataset** — Train on a bigger PGN dataset (e.g., millions of games)
+- [ ] **Difficulty Levels** — Add easy / medium / hard modes
+- [ ] **Opening Book** — Integrate a chess opening database
+- [ ] **Analysis Mode** — Allow players to review and analyze their games
+- [ ] **Multiplayer** — Add support for two players on the same device
+
+## 👥 Team Members
+
+| Name | Role | Contact |
+|------|------|---------|
+| **Fawwaz Nasuha** | Project Lead & Developer | [GitHub](https://github.com/fawwaznasuha12-afk) |
+
+> This is an individual project built with passion and curiosity.
+
 ⭐️ Show Your Support
 If you like this project, please give it a star on GitHub! ⭐
 It helps me stay motivated to improve it further.
