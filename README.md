@@ -105,72 +105,66 @@ Chess_A1/
    ```bash
    git clone https://github.com/fawwaznasuha12-afk/Chess_A1.git
    cd Chess_A1
-Create a virtual environment (recommended)
+   ```
+2. Create a virtual environment (recommended)
 
-bash
+```bash
 python -m venv venv
 source venv/bin/activate   # On Windows: venv\Scripts\activate
-Install dependencies
+```
+3. Install dependencies
 
-bash
+```bash
 pip install -r requirements.txt
 Verify installation
+```
+4. Verify installation
 
-bash
+```bash
 python main.py --help
+```
+
 🎮 Usage Guide
-Train the AI (Reinforcement Learning)
-bash
+      Train the AI (Reinforcement Learning)
+```bash
 python main.py --mode train
-Play Against the AI
-bash
+```
+      Play Against the AI
+```bash
 python main.py --mode play --model models/model.pth
-Imitation Learning from PGN Files
-bash
+```
+   Imitation Learning from PGN Files
+```bash
 python main.py --mode imitation --pgn data/sample.pgn
-View All Options
-bash
+```
+      View All Options
+```bash
 python main.py --help
-📸 Screenshots & Demo
-Coming Soon! 🖼️
-Screenshots and a demo video will be added here once the interface is polished.
+```
 
-For now, you can run the program and see it in action on your terminal!
+📸 Screenshots & Demo
+      Coming Soon! 🖼️
+      Screenshots and a demo video will be added here once the interface is polished.
+      For now, you can run the program and see it in action on your terminal!
 
 🔮 Future Scope
-Graphical User Interface (GUI) — Build a proper GUI using Pygame or Tkinter
-
-Web Deployment — Deploy as a web app using Streamlit or Flask
-
-Larger Dataset — Train on a bigger PGN dataset (e.g., millions of games)
-
-Difficulty Levels — Add easy / medium / hard modes
-
-Opening Book — Integrate a chess opening database
-
-Analysis Mode — Allow players to review and analyze their games
-
-Multiplayer — Add support for two players on the same device
-
-👥 Team Members
-Name	Role	Contact
-Fawwaz Nasuha	Project Lead & Developer	GitHub
-This is an individual project built with passion and curiosity.
+      Graphical User Interface (GUI) — Build a proper GUI using Pygame or Tkinter
+      Web Deployment — Deploy as a web app using Streamlit or Flask
+      Larger Dataset — Train on a bigger PGN dataset (e.g., millions of games)
+      Difficulty Levels — Add easy / medium / hard modes
+      Opening Book — Integrate a chess opening database
+      Analysis Mode — Allow players to review and analyze their games
+      Multiplayer — Add support for two players on the same device
 
 🙏 Acknowledgements
-Python Chess Library — for chess logic inspiration
-
-DeepMind AlphaZero — for the MCTS + RL concept
-
-Open-source PGN datasets from Lichess and OpenChess
-
-All mentors and friends who provided feedback and support
+      Python Chess Library — for chess logic inspiration
+      DeepMind AlphaZero — for the MCTS + RL concept
+      Open-source PGN datasets from Lichess and OpenChess
+      All mentors and friends who provided feedback and support
 
 📄 License
-This project is licensed under the MIT License — feel free to use, modify, and distribute it for any purpose. See the LICENSE file for details.
+      This project is licensed under the MIT License — feel free to use, modify, and distribute it for any purpose. See the LICENSE file for details.
 
 ⭐️ Show Your Support
-If you like this project, please give it a star on GitHub! ⭐
-It helps me stay motivated to improve it further.
-
-Happy Coding! 🚀
+      If you like this project, please give it a star on GitHub! ⭐
+      It helps me stay motivated to improve it further.
