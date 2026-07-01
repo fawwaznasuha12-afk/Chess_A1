@@ -17,7 +17,6 @@
 - [Project Structure](#-project-structure)
 - [Installation & Setup](#-installation--setup)
 - [Usage Guide](#-usage-guide)
-- [Screenshots & Demo](#-screenshots--demo)
 - [Future Scope](#-future-scope)
 - [Team Members](#-team-members)
 - [Acknowledgements](#-acknowledgements)
