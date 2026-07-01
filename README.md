@@ -65,42 +65,30 @@ I built this project as part of my learning journey in **AI and software develop
 
 ---
 
-## 🛠️ Tech Stack
-
-| Category | Technologies |
-|----------|--------------|
-| **Language** | Python 3.9+ |
-| **Machine Learning** | PyTorch / TensorFlow (specify which one you use) |
-| **Search Algorithm** | Monte Carlo Tree Search (MCTS) |
-| **Data Format** | PGN (Portable Game Notation) |
-| **Version Control** | Git & GitHub |
-| **Environment** | Python virtual environment (venv) |
-
----
-
 ## 📁 Project Structure
-Chess_A1/
-├── README.md # Project documentation
-├── requirements.txt # Python dependencies
-├── config.py # Configuration & hyperparameters
-├── main.py # Entry point (train / play)
-├── app.py # GUI / Web interface (if applicable)
-├── src/ # Source code
-│ ├── init.py
-│ ├── board.py # Chess board logic
-│ ├── engine.py # Chess engine / game rules
-│ ├── ai/ # AI modules
-│ │ ├── init.py
-│ │ ├── mcts.py # Monte Carlo Tree Search
-│ │ ├── model.py # Neural network model
-│ │ └── trainer.py # Training pipeline (IL + RL)
-│ └── utils/ # Utility functions
-│ └── helpers.py
-├── models/ # Trained model files (.pth)
-├── data/ # PGN datasets
-└── tests/ # Unit tests (if any)
 
-text
+```bash
+Chess_A1/
+├── README.md                 # Project documentation
+├── requirements.txt          # Python dependencies
+├── config.py                 # Configuration & hyperparameters
+├── main.py                   # Entry point (train / play)
+├── app.py                    # GUI / Web interface (if applicable)
+├── src/                      # Source code
+│   ├── __init__.py
+│   ├── board.py              # Chess board logic
+│   ├── engine.py             # Chess engine / game rules
+│   ├── ai/                   # AI modules
+│   │   ├── __init__.py
+│   │   ├── mcts.py           # Monte Carlo Tree Search
+│   │   ├── model.py          # Neural network model
+│   │   └── trainer.py        # Training pipeline (IL + RL)
+│   └── utils/                # Utility functions
+│       └── helpers.py
+├── models/                   # Trained model files (.pth)
+├── data/                     # PGN datasets
+└── tests/                    # Unit tests (if any)
+```
 
 ---
 
