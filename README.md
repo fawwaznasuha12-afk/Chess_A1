@@ -159,6 +159,25 @@ python main.py --help
 
 > This is an individual project built with passion and curiosity.
 
-⭐️ Show Your Support
-If you like this project, please give it a star on GitHub! ⭐
-It helps me stay motivated to improve it further.
+## 🛠️ Tech Stack
+
+| Category | Technologies |
+|----------|--------------|
+| **Language** | Python 3.9+ |
+| **Machine Learning** | PyTorch (atau TensorFlow, sesuaikan dengan yang kamu pakai) |
+| **Search Algorithm** | Monte Carlo Tree Search (MCTS) |
+| **Data Format** | PGN (Portable Game Notation) |
+| **Version Control** | Git & GitHub |
+
+## 🙏 Acknowledgements
+
+- [Python Chess Library](https://python-chess.readthedocs.io/) — for chess logic inspiration
+- [DeepMind AlphaZero](https://deepmind.com/research/highlighted-research/alphazero) — for the MCTS + RL concept
+- Open-source PGN datasets from [Lichess](https://lichess.org/) and [OpenChess](https://www.openchess.org/)
+- All mentors and friends who provided feedback and support
+
+## 📄 License
+
+This project is licensed under the **MIT License** — feel free to use, modify, and distribute it for any purpose. See the [LICENSE](LICENSE) file for details.
+
+
