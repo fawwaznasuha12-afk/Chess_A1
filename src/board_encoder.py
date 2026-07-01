@@ -1,4 +1,4 @@
-﻿import numpy as np
+import numpy as np
 import chess
 
 class BoardEncoder:
@@ -21,6 +21,10 @@ class BoardEncoder:
         }
         
         for square in chess.SQUARES:
+            # Validate square is in valid range
+            if not (0 <= square < 64):
+                continue
+                
             piece = board.piece_at(square)
             if piece:
                 row, col = divmod(square, 8)
@@ -35,7 +39,7 @@ class BoardEncoder:
         tensor[15, :, :] = 1.0 if castling & chess.BB_H8 else 0.0
         
         ep = board.ep_square
-        if ep:
+        if ep is not None and 0 <= ep < 64:
             row, col = divmod(ep, 8)
             tensor[16, row, col] = 1.0
         
@@ -45,11 +49,20 @@ class BoardEncoder:
     
     @staticmethod
     def decode_action(action_index, board):
-        moves = list(board.legal_moves)
-        if action_index < len(moves):
-            return moves[action_index]
+        """Decode action index to move"""
+        try:
+            moves = list(board.legal_moves)
+            if action_index < len(moves):
+                return moves[action_index]
+        except Exception as e:
+            print(f"Error decoding action: {e}")
         return None
     
     @staticmethod
     def get_action_size(board):
-        return len(list(board.legal_moves))
+        """Get number of legal moves"""
+        try:
+            return len(list(board.legal_moves))
+        except Exception as e:
+            print(f"Error getting action size: {e}")
+            return 0
