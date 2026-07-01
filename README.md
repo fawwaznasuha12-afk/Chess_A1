@@ -164,7 +164,7 @@ python main.py --help
 | Category | Technologies |
 |----------|--------------|
 | **Language** | Python 3.9+ |
-| **Machine Learning** | PyTorch (atau TensorFlow, sesuaikan dengan yang kamu pakai) |
+| **Machine Learning** | PyTorch |
 | **Search Algorithm** | Monte Carlo Tree Search (MCTS) |
 | **Data Format** | PGN (Portable Game Notation) |
 | **Version Control** | Git & GitHub |
