@@ -116,7 +116,6 @@ source venv/bin/activate   # On Windows: venv\Scripts\activate
 
 ```bash
 pip install -r requirements.txt
-Verify installation
 ```
 4. Verify installation
 
