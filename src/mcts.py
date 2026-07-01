@@ -1,4 +1,4 @@
-﻿import numpy as np
+import numpy as np
 import chess
 import math
 from collections import defaultdict
@@ -38,57 +38,81 @@ class MCTS:
         self.temperature = temperature
         
     def search(self, board):
-        root = MCTSNode(board.copy())
-        
-        for _ in range(self.simulations):
-            node = root
-            path = [node]
+        """Execute MCTS search and return best move"""
+        try:
+            root = MCTSNode(board.copy())
             
-            while node.is_expanded and node.children:
-                action, node = max(node.children.items(), key=lambda x: x[1].ucb_score(self.c_puct))
-                path.append(node)
-            
-            if not node.state.is_game_over():
-                from .board_encoder import BoardEncoder
-                board_tensor = BoardEncoder.encode(node.state)
+            for _ in range(self.simulations):
+                node = root
+                path = [node]
                 
-                policy, value = self.model.predict(board_tensor)
-                node.is_expanded = True
+                # Selection and expansion
+                while node.is_expanded and node.children:
+                    action, node = max(node.children.items(), key=lambda x: x[1].ucb_score(self.c_puct))
+                    path.append(node)
                 
-                moves = list(node.state.legal_moves)
-                for i, move in enumerate(moves):
-                    new_state = node.state.copy()
-                    new_state.push(move)
-                    if i < len(policy):
-                        prior = policy[i]
-                        node.children[move] = MCTSNode(new_state, node, move, prior)
-            else:
-                result = node.state.result()
-                if result == "1-0":
-                    value = 1.0
-                elif result == "0-1":
-                    value = -1.0
+                # Evaluation
+                if not node.state.is_game_over():
+                    from .board_encoder import BoardEncoder
+                    board_tensor = BoardEncoder.encode(node.state)
+                    
+                    policy, value = self.model.predict(board_tensor)
+                    node.is_expanded = True
+                    
+                    moves = list(node.state.legal_moves)
+                    
+                    # Only create children if moves exist
+                    if moves:
+                        for i, move in enumerate(moves):
+                            new_state = node.state.copy()
+                            new_state.push(move)
+                            if i < len(policy):
+                                prior = float(policy[i])
+                            else:
+                                prior = 1.0 / len(moves)
+                            node.children[move] = MCTSNode(new_state, node, move, prior)
+                    else:
+                        # Stalemate - no legal moves
+                        value = 0.0
                 else:
-                    value = 0.0
+                    # Terminal node
+                    result = node.state.result()
+                    if result == "1-0":
+                        value = 1.0
+                    elif result == "0-1":
+                        value = -1.0
+                    else:
+                        value = 0.0
+                
+                # Backpropagation
+                for node in reversed(path):
+                    node.visit_count += 1
+                    node.total_value += value
+                    value = -value
             
-            for node in reversed(path):
-                node.visit_count += 1
-                node.total_value += value
-                value = -value
-        
-        if not root.children:
+            # Select best action
+            if not root.children:
+                return None
+                
+            actions = list(root.children.keys())
+            visit_counts = np.array([child.visit_count for child in root.children.values()])
+            
+            if self.temperature == 0:
+                best_action = actions[np.argmax(visit_counts)]
+                probs = np.zeros(len(actions))
+                probs[np.argmax(visit_counts)] = 1.0
+            else:
+                # Avoid division by zero
+                if np.sum(visit_counts) == 0:
+                    probs = np.ones(len(actions)) / len(actions)
+                    best_action = actions[0]
+                else:
+                    probs = np.exp(visit_counts / self.temperature)
+                    probs = probs / np.sum(probs)
+                    best_action = np.random.choice(actions, p=probs)
+            
+            return best_action, list(zip(actions, probs))
+            
+        except Exception as e:
+            print(f"Error in MCTS search: {e}")
             return None
-            
-        actions = list(root.children.keys())
-        visit_counts = np.array([child.visit_count for child in root.children.values()])
-        
-        if self.temperature == 0:
-            best_action = actions[np.argmax(visit_counts)]
-            probs = np.zeros(len(actions))
-            probs[np.argmax(visit_counts)] = 1.0
-        else:
-            probs = np.exp(visit_counts / self.temperature)
-            probs = probs / np.sum(probs)
-            best_action = np.random.choice(actions, p=probs)
-        
-        return best_action, list(zip(actions, probs))
