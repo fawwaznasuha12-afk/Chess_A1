@@ -142,24 +142,34 @@ python main.py --help
 ```
 
 📸 Screenshots & Demo
-      Coming Soon! 🖼️
-      Screenshots and a demo video will be added here once the interface is polished.
-      For now, you can run the program and see it in action on your terminal!
+Coming Soon! 🖼️
+Screenshots and a demo video will be added here once the interface is polished.
+
+For now, you can run the program and see it in action on your termina
 
 🔮 Future Scope
-      Graphical User Interface (GUI) — Build a proper GUI using Pygame or Tkinter
-      Web Deployment — Deploy as a web app using Streamlit or Flask
-      Larger Dataset — Train on a bigger PGN dataset (e.g., millions of games)
-      Difficulty Levels — Add easy / medium / hard modes
-      Opening Book — Integrate a chess opening database
-      Analysis Mode — Allow players to review and analyze their games
-      Multiplayer — Add support for two players on the same device
+Graphical User Interface (GUI) — Build a proper GUI using Pygame or Tkinter
+
+Web Deployment — Deploy as a web app using Streamlit or Flask
+
+Larger Dataset — Train on a bigger PGN dataset (e.g., millions of games)
+
+Difficulty Levels — Add easy / medium / hard modes
+
+Opening Book — Integrate a chess opening database
+
+Analysis Mode — Allow players to review and analyze their games
+
+Multiplayer — Add support for two players on the same device
 
 🙏 Acknowledgements
-      Python Chess Library — for chess logic inspiration
-      DeepMind AlphaZero — for the MCTS + RL concept
-      Open-source PGN datasets from Lichess and OpenChess
-      All mentors and friends who provided feedback and support
+Python Chess Library — for chess logic inspiration
+
+DeepMind AlphaZero — for the MCTS + RL concept
+
+Open-source PGN datasets from Lichess and OpenChess
+
+All mentors and friends who provided feedback and support
 
 📄 License
       This project is licensed under the MIT License — feel free to use, modify, and distribute it for any purpose. See the LICENSE file for details.
