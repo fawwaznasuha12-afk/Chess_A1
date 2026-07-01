@@ -124,7 +124,7 @@ def delete_model(conn, model_id):
 def main():
     parser = argparse.ArgumentParser(description='Chess AI Model Database Tool')
     
-    parser.add_argument('--host', default='192.168.18.11', help='Database host (default: 192.168.18.11)')
+    parser.add_argument('--host', default='192.168.1.5', help='Database host (default: 192.168.1.5)')
     parser.add_argument('--port', type=int, default=3306, help='Database port (default: 3306)')
     parser.add_argument('--user', default='root', help='Database username (default: root)')
     parser.add_argument('--password', default='123369', help='Database password (default: 123369)')
@@ -240,7 +240,7 @@ Usage:
   py app.py delete --id <id>
 
 Database options (optional):
-  --host <host>     (default: 192.168.18.11)
+  --host <host>     (default: 192.168.1.5)
   --port <port>     (default: 3306)
   --user <user>     (default: root)
   --password <pw>   (default: 123369)
