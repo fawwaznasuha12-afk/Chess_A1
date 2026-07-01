@@ -1,4 +1,4 @@
-﻿import torch
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import numpy as np
@@ -23,13 +23,14 @@ class ResidualBlock(nn.Module):
 class ChessNet(nn.Module):
     """Neural network for Chess with policy and value heads"""
     
-    def __init__(self, input_channels=20, residual_blocks=10, filters=256, hidden_units=256):
+    def __init__(self, input_channels=20, residual_blocks=10, filters=256, hidden_units=256, output_size=4672):
         super(ChessNet, self).__init__()
         
         self.input_channels = input_channels
         self.residual_blocks = residual_blocks
         self.filters = filters
         self.hidden_units = hidden_units
+        self.output_size = output_size
         
         self.conv_input = nn.Conv2d(input_channels, filters, 3, padding=1)
         self.bn_input = nn.BatchNorm2d(filters)
@@ -41,7 +42,7 @@ class ChessNet(nn.Module):
         self.policy_conv = nn.Conv2d(filters, 32, 1)
         self.policy_bn = nn.BatchNorm2d(32)
         self.policy_fc = nn.Linear(32 * 8 * 8, hidden_units)
-        self.policy_head = nn.Linear(hidden_units, 4672)
+        self.policy_head = nn.Linear(hidden_units, output_size)
         
         self.value_conv = nn.Conv2d(filters, 1, 1)
         self.value_bn = nn.BatchNorm2d(1)
@@ -49,6 +50,10 @@ class ChessNet(nn.Module):
         self.value_fc2 = nn.Linear(hidden_units, 1)
         
     def forward(self, x):
+        # Ensure input has correct shape
+        if x.dim() == 3:
+            x = x.unsqueeze(0)
+            
         x = F.relu(self.bn_input(self.conv_input(x)))
         
         for residual in self.residual_layers:
@@ -68,10 +73,22 @@ class ChessNet(nn.Module):
         return policy, value
     
     def predict(self, board_tensor):
+        """Predict policy and value for a board position"""
         self.eval()
         with torch.no_grad():
-            board_tensor = torch.FloatTensor(board_tensor).unsqueeze(0)
-            policy, value = self.forward(board_tensor)
-            policy = torch.exp(policy).squeeze(0).cpu().numpy()
-            value = value.squeeze(0).cpu().numpy()[0]
+            if isinstance(board_tensor, np.ndarray):
+                board_tensor = torch.FloatTensor(board_tensor)
+            
+            if board_tensor.dim() == 3:
+                board_tensor = board_tensor.unsqueeze(0)
+            
+            try:
+                policy, value = self.forward(board_tensor)
+                policy = torch.exp(policy).squeeze(0).cpu().numpy()
+                value = value.squeeze(0).cpu().numpy()[0]
+            except Exception as e:
+                print(f"Error in predict: {e}")
+                policy = np.ones(self.output_size) / self.output_size
+                value = 0.0
+                
         return policy, value
