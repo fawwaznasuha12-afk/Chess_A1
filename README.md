@@ -124,11 +124,11 @@ python main.py --help
 ```
 
 🎮 Usage Guide
-      Train the AI (Reinforcement Learning)
+   Train the AI (Reinforcement Learning)
 ```bash
 python main.py --mode train
 ```
-      Play Against the AI
+   Play Against the AI
 ```bash
 python main.py --mode play --model models/model.pth
 ```
@@ -136,7 +136,7 @@ python main.py --mode play --model models/model.pth
 ```bash
 python main.py --mode imitation --pgn data/sample.pgn
 ```
-      View All Options
+   View All Options
 ```bash
 python main.py --help
 ```
@@ -146,6 +146,8 @@ Coming Soon! 🖼️
 Screenshots and a demo video will be added here once the interface is polished.
 
 For now, you can run the program and see it in action on your termina
+
+
 
 🔮 Future Scope
 Graphical User Interface (GUI) — Build a proper GUI using Pygame or Tkinter
@@ -162,6 +164,8 @@ Analysis Mode — Allow players to review and analyze their games
 
 Multiplayer — Add support for two players on the same device
 
+
+
 🙏 Acknowledgements
 Python Chess Library — for chess logic inspiration
 
@@ -171,8 +175,12 @@ Open-source PGN datasets from Lichess and OpenChess
 
 All mentors and friends who provided feedback and support
 
+
+
 📄 License
       This project is licensed under the MIT License — feel free to use, modify, and distribute it for any purpose. See the LICENSE file for details.
+
+
 
 ⭐️ Show Your Support
       If you like this project, please give it a star on GitHub! ⭐
